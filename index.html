@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --navy: #0A2540;
+      --red: #D90429;
+      --light-bg: #F4F7F6;
+      --white: #FFFFFF;
+      --text: #1D2A44;
+      --border: #B3C5D7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: transparent;
+      padding: 6px;
+      color: var(--text);
+    }
+
+    .champs-card {
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 3px solid var(--navy);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .champs-header {
+      background-color: var(--navy);
+      color: var(--white);
+      text-align: center;
+      padding: 8px 4px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      border-bottom: 3px solid var(--red);
+    }
+
+    .champs-row {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--white);
+    }
+
+    .champs-row:nth-child(even) {
+      background-color: #F8FAFC;
+    }
+
+    .champs-row:last-child {
+      border-bottom: none;
+    }
+
+    .row-top {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .letter-badge {
+      width: 28px;
+      height: 28px;
+      background-color: var(--red);
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .category-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dropdown-select {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      background-color: var(--light-bg);
+      border: 1.5px solid var(--navy);
+      border-radius: 5px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .dropdown-select:focus {
+      border-color: var(--red);
+      background-color: #FFFFFF;
+    }
+
+    .edit-toggle {
+      background: none;
+      border: none;
+      color: #6C757D;
+      font-size: 0.7rem;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-left: auto;
+    }
+
+    .custom-input {
+      display: none;
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 0.85rem;
+      border: 1.5px dashed var(--red);
+      border-radius: 5px;
+    }
+
+    .show-input .dropdown-select { display: none; }
+    .show-input .custom-input { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="champs-card">
+    <div class="champs-header">CHAMPS EXPECTATIONS</div>
+
+    <div class="champs-row" id="row-c">
+      <div class="row-top">
+        <div class="letter-badge">C</div>
+        <div class="category-title">Conversation</div>
+        <button class="edit-toggle" onclick="toggleEdit('row-c')">Custom</button>
+      </div>
+      <select class="dropdown-select">
+        <option value="0">Level 0: Voice Off / Silent</option>
+        <option value="1">Level 1: Whisper (Partner)</option>
+        <option value="2">Level 2: Table Talk (Group)</option>
+        <option value="3">Level 3: Presentation Voice</option>
+      </select>
+      <input type="text" class="custom-input" placeholder="Type custom expectation..." onblur="saveCustom('row-c')">
+    </div>
+
+    <div class="champs-row" id="row-h">
+      <div class="row-top">
+        <div class="letter-badge">H</div>
+        <div class="category-title">Help</div>
+        <button class="edit-toggle" onclick="toggleEdit('row-h')">Custom</button>
+      </div>
+      <select class="dropdown-select">
+        <option value="hand">Raise hand & wait in seat</option>
+        <option value="group">Ask tablemates first (Ask 3)</option>
+        <option value="cup">Red/Green Help Card on desk</option>
+        <option value="digital">Submit question via chat/form</option>
+      </select>
+      <input type="text" class="custom-input" placeholder="Type custom expectation..." onblur="saveCustom('row-h')">
+    </div>
+
+    <div class="champs-row" id="row-a">
+      <div class="row-top">
+        <div class="letter-badge">A</div>
+        <div class="category-title">Activity</div>
+        <button class="edit-toggle" onclick="toggleEdit('row-a')">Custom</button>
+      </div>
+      <select class="dropdown-select">
+        <option value="direct">Direct Instruction / Mini-Lesson</option>
+        <option value="independent">Independent Work / Practice</option>
+        <option value="group">Group / Partner Lab</option>
+        <option value="test">Assessment / Quiz</option>
+        <option value="warmup">Warm-Up / Do Now</option>
+      </select>
+      <input type="text" class="custom-input" placeholder="Type custom expectation..." onblur="saveCustom('row-a')">
+    </div>
+
+    <div class="champs-row" id="row-m">
+      <div class="row-top">
+        <div class="letter-badge">M</div>
+        <div class="category-title">Movement</div>
+        <button class="edit-toggle" onclick="toggleEdit('row-m')">Custom</button>
+      </div>
+      <select class="dropdown-select">
+        <option value="seat">Seated at all times</option>
+        <option value="hand">Raise hand for permission</option>
+        <option value="pass">1 at a time (Sign-out / Pass)</option>
+        <option value="free">Responsible movement permitted</option>
+      </select>
+      <input type="text" class="custom-input" placeholder="Type custom expectation..." onblur="saveCustom('row-m')">
+    </div>
+
+    <div class="champs-row" id="row-p">
+      <div class="row-top">
+        <div class="letter-badge">P</div>
+        <div class="category-title">Participation</div>
+        <button class="edit-toggle" onclick="toggleEdit('row-p')">Custom</button>
+      </div>
+      <select class="dropdown-select">
+        <option value="track">Tracking speaker & taking notes</option>
+        <option value="work">Actively completing assigned task</option>
+        <option value="collab">Contributing equal effort to group</option>
+        <option value="silent">Working silently on own material</option>
+      </select>
+      <input type="text" class="custom-input" placeholder="Type custom expectation..." onblur="saveCustom('row-p')">
+    </div>
+
+    <div class="champs-row" id="row-s">
+      <div class="row-top">
+        <div class="letter-badge">S</div>
+        <div class="category-title">Success</div>
+        <button class="edit-toggle" onclick="toggleEdit('row-s')">Custom</button>
+      </div>
+      <select class="dropdown-select">
+        <option value="target">Achieve Daily Learning Target!</option>
+        <option value="best">Do Your Best Effort</option>
+        <option value="finish">Finish Strong!</option>
+      </select>
+      <input type="text" class="custom-input" placeholder="Type custom expectation..." onblur="saveCustom('row-s')">
+    </div>
+  </div>
+
+  <script>
+    function toggleEdit(rowId) {
+      const row = document.getElementById(rowId);
+      row.classList.toggle('show-input');
+      if (row.classList.contains('show-input')) {
+        row.querySelector('.custom-input').focus();
+      }
+    }
+
+    function saveCustom(rowId) {
+      const row = document.getElementById(rowId);
+      const input = row.querySelector('.custom-input');
+      const select = row.querySelector('.dropdown-select');
+
+      if (input.value.trim() !== "") {
+        const newOption = document.createElement('option');
+        newOption.value = input.value;
+        newOption.textContent = input.value;
+        newOption.selected = true;
+        select.appendChild(newOption);
+        row.classList.remove('show-input');
+        input.value = "";
+      } else {
+        row.classList.remove('show-input');
+      }
+    }
+  </script>
+
+</body>
+</html>
